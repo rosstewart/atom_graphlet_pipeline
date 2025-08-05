@@ -36,3 +36,96 @@ Choose from one of the property codes below (each mapped to the text description
     'ZN': 'Zinc-binding (AUC: 0.921)',
 
 
+# Residue Property Prediction Tool
+
+Predict functional residue properties in protein structures using atom graphlet SVMs
+
+## Usage
+
+```bash
+python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]
+Required Arguments
+
+--input : Path to input PDB file
+
+The protein structure file in PDB format
+Example: --input protein.pdb
+
+
+--output : Path to output numpy file
+
+Where to save the prediction scores (numpy array)
+Example: --output predictions.npy
+
+
+--property : Property code to predict
+
+Specifies which functional property to predict
+Must be one of the valid property codes (see list below)
+Example: --property Cat
+
+
+
+Optional Arguments
+
+--p_threshold : P-value threshold for significance (default: 0.05)
+
+Controls the statistical significance cutoff
+Lower values = more stringent filtering
+Example: --p_threshold 0.01
+
+
+--chain : PDB chain to analyze (default: 'A')
+
+Specifies which chain to analyze in multi-chain proteins
+Example: --chain B
+
+
+
+Examples
+
+Basic Usage
+Predict catalytic residues in chain A with default p-value threshold:
+`python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat`
+
+Custom P-value Threshold
+Use a more stringent p-value cutoff of 0.01:
+`python predict_residue_properties.py --input 1xyz.pdb --output atp_predictions.npy --property ATP --p_threshold 0.01`
+
+Specific Chain
+Analyze chain B instead of the default chain A:
+`python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --chain B`
+
+Multiple Properties
+To predict multiple properties, run the script multiple times:
+`
+# Predict catalytic residues
+python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat
+
+# Predict zinc-binding residues
+python predict_residue_properties.py --input 1xyz.pdb --output zn_predictions.npy --property ZN
+
+# Predict phosphorylation sites with stringent threshold
+python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --p_threshold 0.001
+`
+
+Output
+The tool generates two output files:
+
+Prediction scores (<output>.npy):
+
+Numpy array containing prediction scores for each residue
+Higher scores indicate higher confidence in the predicted property
+
+
+Significant residues (<output>_significant_res_indices.npy):
+
+Nump array listing residue indices that meet the p-value threshold
+Contains 1-based residue indices
+
+Notes
+
+Residue indices in the output are 1-based (first residue = 1)
+The p-value threshold determines statistical significance based on empirical null distributions
+Lower p-values (e.g., 0.01, 0.001) provide more conservative predictions
+The tool analyzes one chain at a time; for multi-chain analysis, run separately for each chain

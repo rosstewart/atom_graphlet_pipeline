@@ -150,5 +150,10 @@ with tempfile.TemporaryDirectory() as save_dir:
     empirical_pvalues, significant_indices = get_significant_predictions(property_code, residue_preds, cv_results_dir=cv_results_dir, p_threshold=args.p_threshold)
 
     np.save(preds_f, residue_preds)
+    if len(significant_indices) != 0:
+        np.save('.'.join(preds_f.split('.')[:-1])+'_significant_res_indices.npy', significant_indices)
 
-print(f'\nresidue predictions saved to {preds_f}\n')
+print(f'\nresidue predictions saved to {preds_f}')
+if len(significant_indices) != 0:
+    print(f"significant residue indices saved to {'.'.join(preds_f.split('.')[:-1])+'_significant_res_indices.npy'}")
+print()
