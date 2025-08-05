@@ -132,4 +132,5 @@ The tool generates two output files:
 
 • Some properties (e.g. Phos, Nglyco) only occur on specific amino acids. The training sets are designed appropriately, however this program DOES NOT account for filtering based on amino acid. Please postprocess your predictions accordingly.
 
+• You must run the script from the directory is it located, otherwise you may have to refactor to add absolute paths.
 
