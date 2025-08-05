@@ -3,7 +3,7 @@ Pipeline to predict up to 29 residue properties of a protein using atom graphlet
 
 ## Usage
 
-`python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]`
+`python atom_graphlet_inference_pipeline.py --input <pdb_file> --output <output_file> --property <property_code> [options]`
 
 ### Required Arguments
 
@@ -76,17 +76,17 @@ Example: `--chain B`
 ### Basic Usage
 
 Predict catalytic residues in chain A with default p-value threshold:
-`python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat`
+`python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output cat_predictions.npy --property Cat`
 
 ### Custom P-value Threshold
 
 Use a more stringent p-value cutoff of 0.01:
-`python predict_residue_properties.py --input 1xyz.pdb --output atp_predictions.npy --property ATP --p_threshold 0.01`
+`python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output atp_predictions.npy --property ATP --p_threshold 0.01`
 
 ### Specific Chain
 
 Analyze chain B instead of the default chain A:
-`python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --chain B`
+`python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --chain B`
 
 ### Multiple Properties
 
@@ -94,13 +94,13 @@ To predict multiple properties, run the script multiple times:
 
 ```
 # Predict catalytic residues
-python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat
+python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output cat_predictions.npy --property Cat
 
 # Predict zinc-binding residues
-python predict_residue_properties.py --input 1xyz.pdb --output zn_predictions.npy --property ZN
+python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output zn_predictions.npy --property ZN
 
 # Predict phosphorylation sites with stringent threshold
-python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --p_threshold 0.001
+python atom_graphlet_inference_pipeline.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --p_threshold 0.001
 ```
 
 ## Output
