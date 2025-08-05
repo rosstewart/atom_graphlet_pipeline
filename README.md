@@ -9,20 +9,20 @@ Pipeline to predict up to 29 residue properties of a protein using atom graphlet
 
 `--input` : Path to input PDB file
 
-The protein structure file in PDB format
+The protein structure file in PDB format.
 Example: `--input protein.pdb`
 
 
 `--output` : Path to output numpy file
 
-Where to save the prediction scores (numpy array)
+Where to save the prediction scores (numpy array).
 Example: `--output predictions.npy`
 
 
 `--property` : Property code to predict
 
-Specifies which functional property to predict
-Must be one of the valid property codes (see list below)
+Specifies which functional property to predict.
+Must be one of the valid property codes (see list below).
 Example: `--property Cat`
 
     'ADP': 'ADP-binding (AUC: 0.860)',
@@ -59,14 +59,14 @@ Example: `--property Cat`
 
 `--p_threshold` : P-value threshold for significance (default: `0.05`)
 
-Controls the statistical significance cutoff
-Lower values = more stringent filtering
+Controls the statistical significance cutoff.
+Lower values = more stringent filtering.
 Example: `--p_threshold 0.01`
 
 
 `--chain` : PDB chain to analyze (default: `'A'`)
 
-Specifies which chain to analyze in multi-chain proteins
+Specifies which chain to analyze in multi-chain proteins.
 Example: `--chain B`
 
 
