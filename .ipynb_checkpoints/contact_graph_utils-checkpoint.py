@@ -23,14 +23,14 @@ def map_pdb_atom(atom_name, pdb_atom_mapping):
 '''
 make atom contact graph and extract necessary information
 '''
-def make_graph(pdb_f, edge_dist_threshold, parser, three_letter_to_one, pdb_atom_mapping):
+def make_graph(pdb_f, edge_dist_threshold, parser, three_letter_to_one, pdb_atom_mapping, chain='A'):
     '''
     construct graph with one chain in one graph
     '''
 
     pdb_id = pdb_f.split('/')[-1].split('.')[0]
 
-    model = parser.get_structure(pdb_id, pdb_f)[0]['A']
+    model = parser.get_structure(pdb_id, pdb_f)[0][chain]
     
     '''
     get residues and coords
