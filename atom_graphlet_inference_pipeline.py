@@ -147,7 +147,7 @@ with tempfile.TemporaryDirectory() as save_dir:
     svml_to_sparse(save_dir, graphlet_idx_mapping_f=f'{model_dir}/{property_code}_graphlet_idx_mapping.pkl')
     residue_preds = run_svm_inference(pdb_id, save_dir, model_path)
 
-    empirical_pvalues, significant_indices = get_significant_predictions(property_code, residue_preds, cv_results_dir=cv_results_dir, p_threshold=args.p_threshold)
+    residue_preds, empirical_pvalues, significant_indices = get_significant_predictions(property_code, residue_preds, cv_results_dir=cv_results_dir, p_threshold=args.p_threshold)
 
     np.save(preds_f, residue_preds)
     if len(significant_indices) != 0:
