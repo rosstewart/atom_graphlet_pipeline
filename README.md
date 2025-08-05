@@ -1,29 +1,29 @@
 # Atom Graphlet Property Predictor Pipeline
-Pipeline to predict up to 29 residue properties of a protein using atom graphlet SVM
+Pipeline to predict up to 29 residue properties of a protein using atom graphlet SVM and give empirical p-values for predictions based on the unlabeled dataset
 
 ## Usage
 
-```bash
-python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]
-Required Arguments
+`python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]`
 
---input : Path to input PDB file
+### Required Arguments
+
+`--input` : Path to input PDB file
 
 The protein structure file in PDB format
-Example: --input protein.pdb
+Example: `--input protein.pdb`
 
 
---output : Path to output numpy file
+`--output` : Path to output numpy file
 
 Where to save the prediction scores (numpy array)
-Example: --output predictions.npy
+Example: `--output predictions.npy`
 
 
---property : Property code to predict
+`--property` : Property code to predict
 
 Specifies which functional property to predict
 Must be one of the valid property codes (see list below)
-Example: --property Cat
+Example: `--property Cat`
 
     'ADP': 'ADP-binding (AUC: 0.860)',
     'Allo': 'Allosteric residue (AUC: 0.693)',
@@ -55,39 +55,44 @@ Example: --property Cat
     'UDP': 'UDP-binding (AUC: 0.875)',
     'ZN': 'Zinc-binding (AUC: 0.921)',
 
-Optional Arguments
+### Optional Arguments
 
---p_threshold : P-value threshold for significance (default: 0.05)
+`--p_threshold` : P-value threshold for significance (default: `0.05`)
 
 Controls the statistical significance cutoff
 Lower values = more stringent filtering
-Example: --p_threshold 0.01
+Example: `--p_threshold 0.01`
 
 
---chain : PDB chain to analyze (default: 'A')
+`--chain` : PDB chain to analyze (default: `'A'`)
 
 Specifies which chain to analyze in multi-chain proteins
-Example: --chain B
+Example: `--chain B`
 
 
 
-Examples
+## Examples
 
-Basic Usage
+### Basic Usage
+
 Predict catalytic residues in chain A with default p-value threshold:
 `python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat`
 
-Custom P-value Threshold
+### Custom P-value Threshold
+
 Use a more stringent p-value cutoff of 0.01:
 `python predict_residue_properties.py --input 1xyz.pdb --output atp_predictions.npy --property ATP --p_threshold 0.01`
 
-Specific Chain
+### Specific Chain
+
 Analyze chain B instead of the default chain A:
 `python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --chain B`
 
-Multiple Properties
+### Multiple Properties
+
 To predict multiple properties, run the script multiple times:
-`
+
+```
 # Predict catalytic residues
 python predict_residue_properties.py --input 1xyz.pdb --output cat_predictions.npy --property Cat
 
@@ -96,25 +101,35 @@ python predict_residue_properties.py --input 1xyz.pdb --output zn_predictions.np
 
 # Predict phosphorylation sites with stringent threshold
 python predict_residue_properties.py --input 1xyz.pdb --output phos_predictions.npy --property Phos --p_threshold 0.001
-`
+```
 
-Output
+## Output
+
 The tool generates two output files:
 
-Prediction scores (<output>.npy):
+1. Prediction scores (`<output>.npy`):
 
-Numpy array containing prediction scores for each residue
-Higher scores indicate higher confidence in the predicted property
+    • Numpy array containing prediction scores for each residue
+
+    • Higher scores indicate higher confidence in the predicted property
 
 
-Significant residues (<output>_significant_res_indices.npy):
+2. Significant residue indices (`<output>_significant_res_indices.npy`):
 
-Nump array listing residue indices that meet the p-value threshold
-Contains 1-based residue indices
+    • Numpy array listing residue indices that meet the p-value threshold
 
-Notes
+    • Contains 1-based residue indices
 
-Residue indices in the output are 1-based (first residue = 1)
-The p-value threshold determines statistical significance based on empirical null distributions
-Lower p-values (e.g., 0.01, 0.001) provide more conservative predictions
-The tool analyzes one chain at a time; for multi-chain analysis, run separately for each chain
+## Notes
+
+• Residue indices in the output are 1-based (first residue = 1)
+
+• The p-value threshold determines statistical significance based on empirical null distributions
+
+• Lower p-values (e.g., 0.01, 0.001) provide more conservative predictions
+
+• The tool analyzes one chain at a time; for multi-chain analysis, run separately for each chain
+
+• Some properties (e.g. Phos, Nglyco) only occur on specific amino acids. The training sets are designed appropriately, however this program DOES NOT account for filtering based on amino acid. Please postprocess your predictions accordingly.
+
+
