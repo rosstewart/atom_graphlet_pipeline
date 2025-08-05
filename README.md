@@ -1,9 +1,29 @@
 # Atom Graphlet Property Predictor Pipeline
-Pipeline to predict up to 29 residue properties of a protein using atom graphlets
+Pipeline to predict up to 29 residue properties of a protein using atom graphlet SVM
 
-Usage: `python atom_graphlet_inference_pipeline.py <input.pdb> <output.npy> <property_code>`
+## Usage
 
-Choose from one of the property codes below (each mapped to the text description and cross-validation PU AUC)
+```bash
+python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]
+Required Arguments
+
+--input : Path to input PDB file
+
+The protein structure file in PDB format
+Example: --input protein.pdb
+
+
+--output : Path to output numpy file
+
+Where to save the prediction scores (numpy array)
+Example: --output predictions.npy
+
+
+--property : Property code to predict
+
+Specifies which functional property to predict
+Must be one of the valid property codes (see list below)
+Example: --property Cat
 
     'ADP': 'ADP-binding (AUC: 0.860)',
     'Allo': 'Allosteric residue (AUC: 0.693)',
@@ -34,37 +54,6 @@ Choose from one of the property codes below (each mapped to the text description
     'RNA': 'RNA-binding (AUC: 0.793)',
     'UDP': 'UDP-binding (AUC: 0.875)',
     'ZN': 'Zinc-binding (AUC: 0.921)',
-
-
-# Residue Property Prediction Tool
-
-Predict functional residue properties in protein structures using atom graphlet SVMs
-
-## Usage
-
-```bash
-python predict_residue_properties.py --input <pdb_file> --output <output_file> --property <property_code> [options]
-Required Arguments
-
---input : Path to input PDB file
-
-The protein structure file in PDB format
-Example: --input protein.pdb
-
-
---output : Path to output numpy file
-
-Where to save the prediction scores (numpy array)
-Example: --output predictions.npy
-
-
---property : Property code to predict
-
-Specifies which functional property to predict
-Must be one of the valid property codes (see list below)
-Example: --property Cat
-
-
 
 Optional Arguments
 
